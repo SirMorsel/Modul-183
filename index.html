@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+    let saveword=[];
+    let saveLetter = '';
+    let storageKey = 'words';
+    //let params = localStorage.getItem(storageKey);
+    //http://dynamicdrive.com/dynamicindex17/ajaxroutine.htm
+
+    let url='#';
+
+    window.addEventListener("keydown", function(event) {
+
+      if (event.keyCode != 13) {
+        let str =  event.key;
+        saveLetter = saveLetter + str;
+      }
+      else
+      {
+        saveword.push(saveLetter);
+        saveLetter = '';
+        console.log(saveword);
+        localStorage.setItem(storageKey, saveword);
+      }
+      str= '';
+});
+        //ajaxpack.getAjaxRequest(url, parameters, callbackfunc, filetype)
+        console.log(localStorage.getItem(storageKey));
+
+    </script>
+  </body>
+</html>
