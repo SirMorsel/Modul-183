@@ -99,3 +99,12 @@ C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\de\Microsoft.Owin.Secur
 C:\Modul-183\TwoFactorAutication\TwoFactorAutication\obj\Debug\TwoFactorAutication.csprojResolveAssemblyReference.cache
 C:\Modul-183\TwoFactorAutication\TwoFactorAutication\obj\Debug\TwoFactorAutication.dll
 C:\Modul-183\TwoFactorAutication\TwoFactorAutication\obj\Debug\TwoFactorAutication.pdb
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.Primitives.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.Configuration.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.Configuration.Json.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\jose-jwt.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Modul-183\TwoFactorAutication\TwoFactorAutication\bin\Microsoft.Extensions.FileSystemGlobbing.dll

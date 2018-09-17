@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -28,17 +28,17 @@ namespace TwoFactorAutication.Controllers
             var username = Request["username"];
             var password = Request["password"];
 
-            if (username == "test" && password =="test")
+            if (username == "test" && password == "test")
             {
                 var request = (HttpWebRequest)WebRequest.Create("https://rest.nexmo.com/sms/json");
-
                 var secret = "TEST_SECRET";
 
-                var postData = "api_key==baa99127";
+                var postData = "api_key=baa99127";
                 postData += "&api_secret=GGjwYqY98MYcZveA";
-                postData += "&to=41796709107";
-                postData += "&from=NEXMO";
-                postData += "&text=Hello from Nexmo";
+                postData += "&to=41796709107 ";
+                postData += "&from=\"LosDosTacos\"";
+                postData += "&text=\"" + secret + "\"";
+
                 var data = Encoding.ASCII.GetBytes(postData);
 
                 request.Method = "POST";
@@ -63,7 +63,7 @@ namespace TwoFactorAutication.Controllers
             return View();
         }
 
-     
+
 
         public ActionResult Contact()
         {
