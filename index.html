@@ -4,12 +4,13 @@
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body>
+  <body onload="loadXMLDoc()">
+    <div id="demo"></div>
     <script type="text/javascript">
     let saveword=[];
     let saveLetter = '';
     let storageKey = 'words';
-    //let params = localStorage.getItem(storageKey);
+  
     //http://dynamicdrive.com/dynamicindex17/ajaxroutine.htm
 
     let url='#';
@@ -29,8 +30,19 @@
       }
       str= '';
 });
-        //ajaxpack.getAjaxRequest(url, parameters, callbackfunc, filetype)
         console.log(localStorage.getItem(storageKey));
+
+        function loadXMLDoc() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("demo").innerHTML =
+              this.responseText;
+            }
+          };
+          xhttp.open("GET", "xmlhttp_info.txt", true);
+          xhttp.send();
+}
 
     </script>
   </body>
