@@ -30,12 +30,12 @@ namespace two_factor_ath_totp_google.Controllers
         public ActionResult SetupAuthentication()
         {
             TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
-            var setupInfo = tfa.GenerateSetupCode("MY_MVC_APP", "MY_EMAIL_ADRESS", "MY_SECRT_KEY", 300, 300);
+            var setupInfo = tfa.GenerateSetupCode("MY_MVC_APP", "MY_EMAIL_ADRESS", "MY_SECRET_KEY", 300, 300);
 
             string qrCodeImageUrl = setupInfo.QrCodeSetupImageUrl;
             string manualEntrySetupCode = setupInfo.ManualEntryKey;
 
-            ViewBag.Message = "<h2>QR-Code:</h2> <br><br> <img src'" + qrCodeImageUrl + "' /> <br><br><h2>Token for manual entry</h2> <br>" + manualEntrySetupCode;
+            ViewBag.Message = "<h2>QR-Code:</h2> <br><br> <img src='" + qrCodeImageUrl + "' /> <br><br><h2>Token for manual entry</h2> <br>" + manualEntrySetupCode;
 
             return View();
         }
