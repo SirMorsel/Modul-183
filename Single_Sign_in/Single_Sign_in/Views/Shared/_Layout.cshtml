@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="goole-signin-client_id" content="581606234383-07esc9551p70h43qt16krq5b569uusul.apps.googleusercontent.com"/>
+    <meta name="google-signin-client_id" content="581606234383-07esc9551p70h43qt16krq5b569uusul.apps.googleusercontent.com"/>
     <title>@ViewBag.Title - Meine ASP.NET-Anwendung</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -27,6 +27,9 @@
                     <li>@Html.ActionLink("Info", "About", "Home")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
                 </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="#" onclick="signOut();">Sign out</a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -42,6 +45,38 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <script src="https://apis.google.com/js/platform.js" async defer>async defer</script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <script type="text/javascript">
+
+        function onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+            console.log('ID-TOKEN: ' + id_token);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:53765/Home/SSOTokenSignin');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
+
+        }
+    </script>
+    <script>
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
 </body>
 </html>
