@@ -51,12 +51,8 @@ namespace Cookie.Controllers
                 {
                     Response.Cookies["cookie"].Value = "cookie value";
                 }
+                Response.Cookies["cookie"].Expires = DateTime.Now.AddDays(expireDate);
                 return View();
-            }
-
-            if (Request.Cookies["cookie"] != null)
-            {
-               Response.Cookies["cookie"].Expires = DateTime.Now.AddDays(expireDate);
             }
             return Login();
         }
