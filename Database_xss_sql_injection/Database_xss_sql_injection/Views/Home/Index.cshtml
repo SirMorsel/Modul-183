@@ -2,18 +2,16 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row" style="margin-top: 80px;">
-    <div class="col-lg-8 col-lg-offset-2">
-        <legend>Log In</legend>
-        <form c1ass="well" action="@Url.Action("Login")" method="post">
+    <div class="row">
+        <form class="well col" action="./Home/DoLogin" method="post" class="well col-lg-8 col-lg-offset-2" style="margin-top:60px;">
 
-            <legend><small>Username</small></legend>
+            <label>Username</label>
 
             <input type="text" name="username" value="" class="form-control" />
-            <br />
-            <legend><small>Password</small></legend>
+
+            <label>Password</label>
             <input type="password" name="password" value="" class="form-control" />
-            <br />
+
             <input type="submit" name="" value="Log In" class="btn btn-primary" />
         </form>
     </div>
