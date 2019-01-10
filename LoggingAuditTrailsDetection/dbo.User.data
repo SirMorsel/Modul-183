@@ -1,0 +1,3 @@
+﻿SET IDENTITY_INSERT [dbo].[User] ON
+INSERT INTO [dbo].[User] ([Id], [Username], [Password], [Firstname], [Familyname], [Role]) VALUES (1, 'hans@muster.ch', 'Must3R', 'Hans', 'Muster', 'user')
+SET IDENTITY_INSERT [dbo].[User] OFF
