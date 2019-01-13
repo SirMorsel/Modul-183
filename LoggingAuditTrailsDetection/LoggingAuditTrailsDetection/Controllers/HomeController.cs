@@ -108,66 +108,59 @@ namespace LoggingAuditTrailsDetection.Controllers
             }
             else
             {
-                // credentials do not match
-                // check whether a user can be found at least upon username
                 con.Close();
                 con.Open();
 
-                SqlCommand cmd_userid_by_name = new SqlCommand();
-                cmd_userid_by_name.CommandText = "SELECT [Id] FROM [dbo].[User] WHERE [Username] = '" + username + "'";
-                cmd_userid_by_name.Connection = con;
+                SqlCommand cmdUserid = new SqlCommand();
+                cmdUserid.CommandText = "SELECT id FROM [dbo].[User] WHERE username = '" + username + "'";
+                cmdUserid.Connection = con;
 
-                SqlDataReader reader_userid_by_name = cmd_userid_by_name.ExecuteReader();
-                reader_credentials = cmd_credentials.ExecuteReader();
-                if (reader_userid_by_name.HasRows) // user has been found
+                SqlDataReader readerUserid = cmdUserid.ExecuteReader();
+                if (readerUserid.HasRows)
                 {
-                    var user_id = 0;
-                    while (reader_credentials.Read())
+                    var userid = 0;
+                    while (readerUserid.Read())
                     {
-                        user_id = reader_credentials.GetInt32(0);
+                        userid = readerUserid.GetInt32(0);
                         break;
                     }
-
                     con.Close();
                     con.Open();
 
-                    // cheack, whether user has already 5 login attempts
-                    // or password does by far not match the systems reccommendations
-                    // => Block the user
-                    SqlCommand failed_log_cmd = new SqlCommand();
-                    failed_log_cmd.CommandText = "SELECT COUNT(ID) FROM [dbo].[UserLog] WHERE [UserId] = '" + user_id + "' " +
-                        "AND Result = 'failed' AND CAST(CreatedOn As date) ='" + System.DateTime.Now.ToShortDateString().Substring(0, 10) + "'";
-                    failed_log_cmd.Connection = con;
-                    SqlDataReader failed_login_count = failed_log_cmd.ExecuteReader();
+                    SqlCommand failedLogCommand = new SqlCommand();
+                    failedLogCommand.CommandText = "SELECT count(id) FROM [dbo].[UserLog] WHERE userid = '" + userid + "' " + "and result = 'failed' and cast(createdon as date) = '" +
+                        System.DateTime.Now.ToShortDateString().Substring(0, 10) + "'";
+                    failedLogCommand.Connection = con;
+                    SqlDataReader failedCount = failedLogCommand.ExecuteReader();
 
-                    var attempts = 0;
-                    if (failed_login_count.HasRows)
+                    var attemps = 0;
+                    if (failedCount.HasRows)
                     {
-                        while (reader_credentials.Read())
+                        while (failedCount.Read())
                         {
-                            attempts = reader_credentials.GetInt32(0); // get the count
+                            attemps = failedCount.GetInt32(0);
                             break;
                         }
                     }
-
-                    if (attempts >= 5 || password.Length < 4 || password.Length > 20)
+                    if (attemps >= 5 || password.Length < 4 || password.Length > 20)
                     {
-                        // block user!
+                        SqlCommand blockUser = new SqlCommand();
+                        blockUser.CommandText = "upadate [dbo].[User] set role = 'blocked' WHERE userid = '" + userid + "'";
+                        RedirectToAction("Index");
+                        con.Close();
                     }
-
                     con.Close();
                     con.Open();
 
-                    // log user-behaviour
-                    SqlCommand log_cmd = new SqlCommand();
-                    log_cmd.CommandText = "INSERT INTO [dbo].[UserLog] (UserId, IP, Action, Result, CreatedOn, Browser) " +
-                        "VALUES('" + user_id + "', " + ip + "', 'login', 'failed', GETDATE(),'" + platform + "')";
-                    log_cmd.Connection = con;
-                    log_cmd.ExecuteReader();
+                    SqlCommand logCmd = new SqlCommand();
+                    logCmd.CommandText = "INSERT INTO [dbo].[UserLog] (userid, ip, action, result, createdon, browser) VALUES('" + 
+                        userid + "', '" + ip + "', 'login', 'failed', GETDATE(), '" + platform + "')";
+                    logCmd.Connection = con;
+                    logCmd.ExecuteReader();
 
-                    ViewBag.Message = "No user found";
-
+                    ViewBag.Message = "No User found";
                 }
+
                 else
                 {
                     con.Close();
@@ -185,10 +178,11 @@ namespace LoggingAuditTrailsDetection.Controllers
                     ViewBag.Message = "No user found";
                 }
             }
+
             con.Close();
             return RedirectToAction("Logs", "Home");
         }
-        [HttpPost]
+
         public ActionResult Logs()
         {
             SqlConnection con = new SqlConnection();
